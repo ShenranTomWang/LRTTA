@@ -30,3 +30,5 @@ OPTIM:
   BETA: 0.9
   LR: 1e-3
   WD: 0.
+SAVE_DIR: /ubc/cs/home/s/shenranw/scratch/LREATA/out
+DATA_DIR: /ubc/cs/home/s/shenranw/scratch/datasets
