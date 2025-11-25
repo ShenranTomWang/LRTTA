@@ -9,4 +9,4 @@ source /ubc/cs/home/s/shenranw/.bashrc
 source /ubc/cs/home/s/shenranw/scratch/envs/LREATA/.venv/bin/activate
 
 cd /ubc/cs/home/s/shenranw/LREATA
-python test_time.py --cfg cfgs/cifar10_c/Standard/tent_reservoirtta.yaml
+python test_time.py --cfg cfgs/cifar10_c/Standard/tent_reservoir.yaml
