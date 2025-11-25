@@ -28,21 +28,23 @@ class Tent(TTAMethod):
         return outputs, loss
 
     @torch.enable_grad()
-    def forward_and_adapt(self, x):
+    def forward_and_adapt(self, x, is_source: bool = False):
         """Forward and adapt model on batch of data.
         Measure entropy of the model prediction, take gradients, and update params.
         """
         if self.mixed_precision and self.device == "cuda":
             with torch.cuda.amp.autocast():
                 outputs, loss = self.loss_calculation(x)
-            self.scaler.scale(loss).backward()
-            self.scaler.step(self.optimizer)
-            self.scaler.update()
+            if not is_source:
+                self.scaler.scale(loss).backward()
+                self.scaler.step(self.optimizer)
+                self.scaler.update()
             self.optimizer.zero_grad()
         else:
             outputs, loss = self.loss_calculation(x)
-            loss.backward()
-            self.optimizer.step()
+            if not is_source:
+                loss.backward()
+                self.optimizer.step()
             self.optimizer.zero_grad()
         return outputs
 
