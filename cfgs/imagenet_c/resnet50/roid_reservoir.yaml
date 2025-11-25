@@ -1,0 +1,41 @@
+CORRUPTION:
+  RECUR: 20
+  NUM_EX: 5000
+  DATASET: imagenet_c
+  SEVERITY:
+    - 5
+  TYPE:
+    - gaussian_noise
+    - shot_noise
+    - impulse_noise
+    - defocus_blur
+    - glass_blur
+    - motion_blur
+    - zoom_blur
+    - snow
+    - frost
+    - fog
+    - brightness
+    - contrast
+    - elastic_transform
+    - pixelate
+    - jpeg_compression
+MODEL:
+  ADAPTATION: roid_reservoirtta
+  ARCH: resnet50
+OPTIM:
+  BETA: 0.9
+  LR: 0.00025
+  METHOD: SGD
+  STEPS: 1
+  WD: 0.0
+TEST:
+  BATCH_SIZE: 64
+ROID:
+  USE_CONSISTENCY: False
+  USE_PRIOR_CORRECTION: False
+RESERVOIRTTA:
+  MAX_NUM_MODELS: 16
+  SIZE_OF_BUFFER: 1024
+SOURCE:
+  NUM_SAMPLES: 2000

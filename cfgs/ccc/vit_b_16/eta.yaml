@@ -1,0 +1,21 @@
+MODEL:
+  ADAPTATION: eata
+  ARCH: Standard_VITB
+TEST:
+  BATCH_SIZE: 64
+CORRUPTION:
+  DATASET: ccc
+  SEVERITY:
+    - 5
+  TYPE:
+    - baseline_20_transition+speed_1000_seed_44
+OPTIM:
+  BETA: 0.9
+  LR: 1e-4
+  METHOD: SGD
+  STEPS: 1
+  WD: 0.0
+EATA:
+  FISHER_ALPHA: 0.0
+  D_MARGIN: 0.05
+

@@ -1,0 +1,22 @@
+CORRUPTION:
+  DATASET: ccc
+  SEVERITY:
+    - 5
+  TYPE:
+    - baseline_20_transition+speed_1000_seed_44
+MODEL:
+  ADAPTATION: sar_reservoirtta
+  ARCH: Standard_VITB
+OPTIM:
+  BETA: 0.9
+  LR: 1e-4
+  METHOD: SGD
+  STEPS: 1
+  WD: 0.0
+TEST:
+  BATCH_SIZE: 64
+RESERVOIRTTA:
+  MAX_NUM_MODELS: 16
+  SIZE_OF_BUFFER: 1024
+SOURCE:
+  NUM_SAMPLES: 2000

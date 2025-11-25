@@ -1,0 +1,51 @@
+MODEL:
+  ADAPTATION: prompt_reservoirtta
+  ARCH: Standard_VITB
+TEST:
+  BATCH_SIZE: 64
+CORRUPTION:
+  RECUR: 20
+  NUM_EX: 5000
+  DATASET: imagenet_c
+  SEVERITY:
+    - 5
+  TYPE:
+    - gaussian_noise
+    - shot_noise
+    - impulse_noise
+    - defocus_blur
+    - glass_blur
+    - motion_blur
+    - zoom_blur
+    - snow
+    - frost
+    - fog
+    - brightness
+    - contrast
+    - elastic_transform
+    - pixelate
+    - jpeg_compression
+OPTIM:
+  METHOD: AdamW
+  STEPS: 1
+  MOMENTUM: 0.9
+  LR: 0.1
+  WD: 0.01
+  BETA: 0.9
+
+DPCORE:
+  TEMP_TAU: 3.0
+  EMA_ALPHA: 0.999
+  THR_RHO: 0.8
+  E_ID: 1
+  E_OOD: 50
+  NUM_PROMPTS: 8
+  SRC_NUM_SAMPLES: 300
+RESERVOIRTTA:
+  MAX_NUM_MODELS: 16
+  SIZE_OF_BUFFER: 1024
+  ENSEMBLING: False
+  SOURCE_BUFFER: True
+  CENTROID_REG: True 
+SOURCE:
+  NUM_SAMPLES: 2000
