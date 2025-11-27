@@ -90,11 +90,10 @@ def evaluate(description):
         pickle.dump(result_dict, f)
 
 
-    for r in range(num_recur):
-        logger.info(f"Start Recurrence={r+1}")
+    for i_dom, domain_name in enumerate(domain_sequence):
+        logger.info(f"Start Domain: {domain_name}")
         result_dict = {}
-
-        for i_dom, domain_name in enumerate(domain_sequence):
+        for r in range(num_recur):
             for severity in severities:
                 test_data_loader = get_test_loader(
                     setting=cfg.SETTING,
