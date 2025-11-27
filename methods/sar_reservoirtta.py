@@ -49,7 +49,7 @@ class SAR_ReservoirTTA(TTAMethod):
         ####################### Reservoir End #######################
 
     @torch.enable_grad()  # ensure grads in possible no grad context for testing
-    def forward_and_adapt(self, x):
+    def forward_and_adapt(self, x, is_source: bool = False):
         """Forward and adapt model input data.
         Measure entropy of the model prediction, take gradients, and update params.
         """
@@ -74,23 +74,25 @@ class SAR_ReservoirTTA(TTAMethod):
         entropys = self.softmax_entropy(outputs)
         filter_ids_1 = torch.where(entropys < self.margin_e0)
         entropys = entropys[filter_ids_1]
-        loss = entropys.mean(0)
-        loss.backward()
+        if not is_source:
+            loss = entropys.mean(0)
+            loss.backward()
 
-        self.optimizer.first_step(zero_grad=True)  # compute \hat{\epsilon(\Theta)} for first order approximation, Eqn. (4)
+            self.optimizer.first_step(zero_grad=True)  # compute \hat{\epsilon(\Theta)} for first order approximation, Eqn. (4)
         entropys2 = self.softmax_entropy(self.model(imgs_test))
         entropys2 = entropys2[filter_ids_1]  # second time forward
         filter_ids_2 = torch.where(entropys2 < self.margin_e0)  # here filtering reliable samples again, since model weights have been changed to \Theta+\hat{\epsilon(\Theta)}
-        loss_second = entropys2[filter_ids_2].mean(0)
-        if not np.isnan(loss_second.item()):
-            self.ema[self.reservoir.model_idx] = update_ema(self.ema[self.reservoir.model_idx], loss_second.item())  # record moving average loss values for model recovery
-        # second time backward, update model weights using gradients at \Theta+\hat{\epsilon(\Theta)}
-        loss_second.backward()
-        self.optimizer.second_step(zero_grad=True)
+        if not is_source:
+            loss_second = entropys2[filter_ids_2].mean(0)
+            if not np.isnan(loss_second.item()):
+                self.ema[self.reservoir.model_idx] = update_ema(self.ema[self.reservoir.model_idx], loss_second.item())  # record moving average loss values for model recovery
+            # second time backward, update model weights using gradients at \Theta+\hat{\epsilon(\Theta)}
+            loss_second.backward()
+            self.optimizer.second_step(zero_grad=True)
 
-        ####################### Reservoir Start #######################
-        self.reservoir.update_kth_model(self.optimizer, which_model='student', which_part='params')
-        ####################### Reservoir End #######################
+            ####################### Reservoir Start #######################
+            self.reservoir.update_kth_model(self.optimizer, which_model='student', which_part='params')
+            ####################### Reservoir End #######################
 
 
         # perform model recovery

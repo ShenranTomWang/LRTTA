@@ -1,5 +1,5 @@
 MODEL:
-  ADAPTATION: sar_reservoirtta
+  ADAPTATION: lrsar
   ARCH: Standard
 TEST:
   BATCH_SIZE: 200
