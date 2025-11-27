@@ -23,7 +23,7 @@ CORRUPTION:
     - elastic_transform
     - pixelate
     - jpeg_compression
-  RECUR: 200
+  RECUR: 100
 OPTIM:
   METHOD: Adam
   STEPS: 1
@@ -35,3 +35,5 @@ RESERVOIRTTA:
   SIZE_OF_BUFFER: 1024
 SOURCE:
   NUM_SAMPLES: 2000
+SAVE_DIR: /ubc/cs/home/s/shenranw/scratch/LREATA/out
+DATA_DIR: /ubc/cs/home/s/shenranw/scratch/datasets

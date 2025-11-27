@@ -89,11 +89,12 @@ def evaluate(description):
     with open(os.path.join(cfg.SAVE_DIR, f"results_0.pkl"), 'wb') as f:
         pickle.dump(result_dict, f)
 
-    for i_dom, domain_name in enumerate(domain_sequence):
-        logger.info(f"Start Domain={domain_name}")
+
+    for r in range(num_recur):
+        logger.info(f"Start Recurrence={r+1}")
         result_dict = {}
 
-        for r in range(num_recur):
+        for i_dom, domain_name in enumerate(domain_sequence):
             for severity in severities:
                 test_data_loader = get_test_loader(
                     setting=cfg.SETTING,
