@@ -23,7 +23,7 @@ CORRUPTION:
     - elastic_transform
     - pixelate
     - jpeg_compression
-  RECUR: 100
+  RECUR: 400
 OPTIM:
   METHOD: Adam
   STEPS: 1

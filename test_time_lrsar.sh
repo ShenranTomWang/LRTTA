@@ -2,7 +2,7 @@
 #SBATCH --nodes=1
 #SBATCH --gpus=1
 #SBATCH --mem-per-cpu=16G
-#SBATCH --time=12:0:0
+#SBATCH --time=24:0:0
 #SBATCH --partition=nlpgpo
 
 source /ubc/cs/home/s/shenranw/.bashrc
